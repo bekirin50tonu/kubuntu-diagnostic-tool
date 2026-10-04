@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KDiag - Kubuntu Diagnostic Tool</title>
+    <style>
+        :root {
+            --bg: #1a1a1a;
+            --surface: #2d2d2d;
+            --border: #404040;
+            --text: #e8e8e8;
+            --text-muted: #a0a0a0;
+            --accent: #9ecfff;
+            --ok: #52c41a;
+            --warning: #faad14;
+            --error: #f5222d;
+            --critical: #722ed1;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font: 14px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            overflow: hidden;
+        }
+        .app { display: flex; height: 100vh; }
+        .sidebar {
+            width: 220px;
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            padding: 16px 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar h1 {
+            padding: 8px 20px 24px;
+            font-size: 20px;
+            font-weight: 600;
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-item {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            transition: background 0.15s;
+        }
+        .nav-item:hover { background: #3a3a3a; }
+        .nav-item.active { background: #3a3a3a; border-left-color: var(--accent); color: var(--accent); }
+        .nav-item .sev { opacity: 0.7; font-size: 12px; margin-top: 2px; }
+        .content { flex: 1; overflow-y: auto; padding: 24px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .header h2 { font-size: 22px; font-weight: 600; }
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: #373737;
+            color: var(--text);
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .btn:hover { background: #454545; }
+        .btn.primary { background: var(--accent); color: #111; border-color: transparent; }
+        .btn.primary:hover { background: #8ecfff; }
+        .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .card-title { font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .card-value { font-size: 28px; font-weight: 600; }
+        .card-sub { font-size: 13px; color: var(--text-muted); }
+        .severity-ok { color: var(--ok); }
+        .severity-warning { color: var(--warning); }
+        .severity-error { color: var(--error); }
+        .severity-critical { color: var(--critical); }
+        .report-line {
+            font-family: monospace;
+            font-size: 13px;
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .warnings-section, .errors-section { margin-bottom: 24px; }
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .badge {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge-warning { background: var(--warning); color: #000; }
+        .badge-error { background: var(--error); color: #fff; }
+        .badge-critical { background: var(--critical); color: #fff; }
+        textarea {
+            width: 100%;
+            background: #111;
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: 6px;
+            padding: 12px;
+            font-family: monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            resize: none;
+            margin-bottom: 8px;
+        }
+        .copy-btn { width: 100%; }
+        .hidden { display: none; }
+        .chart-container { position: relative; height: 200px; width: 100%; }
+        .table-container { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+        th { color: var(--text-muted); font-weight: 500; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>
